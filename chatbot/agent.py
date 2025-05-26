@@ -15,6 +15,7 @@ from cost_estimate_widget import generate_cost_estimates
 from generate_arch_widget import generate_arch
 from generate_cdk_widget import generate_cdk
 from generate_cfn_widget import generate_cfn
+from generate_terraform_widget import generate_terraform
 from generate_doc_widget import generate_doc
 import io
 
@@ -217,7 +218,12 @@ else:
             st.session_state.arch = False
             st.session_state.cdk = False
             st.session_state.cfn = False
+            st.session_state.terraform = False
             st.session_state.doc = False
+            
+            # Reset CDK language selection to default
+            if 'cdk_language' in st.session_state:
+                st.session_state.cdk_language = "TypeScript"
 
             st.chat_message("user").markdown(prompt)
             st.session_state.messages.append({"role": "user", "content": prompt})
@@ -314,6 +320,9 @@ else:
         if 'generate_cfn_called' not in st.session_state:
             st.session_state.generate_cfn_called = False
 
+        if 'generate_terraform_called' not in st.session_state:
+            st.session_state.generate_terraform_called = False
+
         if 'generate_doc_called' not in st.session_state:
             st.session_state.generate_doc_called = False
 
@@ -349,6 +358,11 @@ else:
                     st.session_state.generate_cfn_called = True
 
             with devgenius_option_tabs[4]:
+                if not st.session_state.generate_terraform_called:
+                    generate_terraform(st.session_state.mod_messages)
+                    st.session_state.generate_terraform_called = True
+
+            with devgenius_option_tabs[5]:
                 if not st.session_state.generate_doc_called:
                     generate_doc(st.session_state.mod_messages)
                     st.session_state.generate_doc_called = True
@@ -361,6 +375,7 @@ else:
             st.session_state.generate_arch_called = False
             st.session_state.generate_cdk_called = False
             st.session_state.generate_cfn_called = False
+            st.session_state.generate_terraform_called = False
             st.session_state.generate_cost_estimates_called = False
             st.session_state.generate_doc_called = False
 
@@ -370,7 +385,12 @@ else:
             st.session_state.arch = False
             st.session_state.cdk = False
             st.session_state.cfn = False
+            st.session_state.terraform = False
             st.session_state.doc = False
+            
+            # Reset CDK language selection to default
+            if 'cdk_language' in st.session_state:
+                st.session_state.cdk_language = "TypeScript"
 
             st.session_state.mod_messages.append({"role": "user", "content": prompt})
             st.chat_message("user").markdown(prompt)

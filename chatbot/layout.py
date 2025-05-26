@@ -145,5 +145,5 @@ def create_tabs():
 
 def create_option_tabs():
     """Create and return the Streamlit tabs for the various options supported by DevGenius."""
-    tabs = st.tabs(["Cost Estimates", "Architecture diagram", "CDK code", "CloudFormation code", "Technical documentation"])  # noqa
+    tabs = st.tabs(["Cost Estimates", "Architecture diagram", "CDK code", "CloudFormation code", "Terraform code", "Technical documentation"])  # noqa
     return tabs
