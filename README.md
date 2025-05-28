@@ -1,6 +1,6 @@
 # DevGenius - AWS Solution Generator
 
-DevGenius is an AI-powered application that transforms project ideas into complete, ready-to-deploy AWS solutions. It leverages Amazon Bedrock and Claude AI models to provide architecture diagrams, cost estimates, infrastructure as code, and comprehensive technical documentation.
+DevGenius is an AI-powered application that transforms project ideas into complete, ready-to-deploy AWS solutions. It leverages Amazon Bedrock and Amazon Nova AI models to provide architecture diagrams, cost estimates, infrastructure as code, and comprehensive technical documentation.
 
 ![Watch the demo video](demo/DevGenius_Demo.gif)
 
@@ -12,17 +12,19 @@ DevGenius is an AI-powered application that transforms project ideas into comple
 
 - **Solution Architecture Generation**: Create AWS architectures based on your project requirements
 - **Architecture Diagram Creation**: Generate visual representations of your AWS solutions
-- **Infrastructure as Code**: Generate both AWS CDK and CloudFormation templates
+- **Infrastructure as Code**: Generate AWS CDK, CloudFormation, and Terraform templates
 - **Cost Estimation**: Get detailed cost breakdowns for all proposed AWS services
 - **Technical Documentation**: Generate comprehensive documentation for your solutions
 - **Existing Architecture Analysis**: Upload and analyze existing architecture diagrams
+- **🆕 Architecture Improvement Analysis**: Upload JPG/PNG architecture images to get detailed improvement recommendations
+- **🆕 Project Backlog & Estimations**: Generate complete project backlogs with user stories, story points, and time estimations
 
 ## Architecture Overview
 
 DevGenius is built using a modern cloud-native architecture:
 
 - **Frontend**: Streamlit-based UI for intuitive interaction
-- **AI Engine**: Amazon Bedrock with Claude AI models for solution generation
+- **AI Engine**: Amazon Bedrock with Amazon Nova AI models for solution generation
 - **Knowledge Base**: Amazon Bedrock Knowledge Base with AWS documentation sources
 - **Vector Storage**: Amazon OpenSearch Serverless for vector embeddings
 - **Data Storage**:
@@ -40,7 +42,7 @@ DevGenius is built using a modern cloud-native architecture:
 - AWS CLI configured with credentials
 - Python 3.12 or later
 - Docker (for container builds and local development)
-- Access to Amazon Bedrock models (Claude-3-Sonnet/Claude-3-5-Sonnet)
+- Access to Amazon Bedrock models (Amazon Nova Pro)
 
 ## Installation and Setup
 
@@ -160,9 +162,11 @@ The CDK stack deploys:
 5. Use the option tabs to generate additional assets:
    - Cost Estimates: Get detailed pricing breakdown
    - Architecture Diagram: Visual representation of the solution
-   - CDK Code: infrastructure as code
+   - CDK Code: Infrastructure as code
    - CloudFormation Code: YAML templates
+   - Terraform Code: Terraform infrastructure templates
    - Technical Documentation: Comprehensive solution documentation
+   - 🆕 Project Backlog: Complete project backlog with estimations
 
 ### Analyzing Existing Architecture
 
@@ -170,6 +174,30 @@ The CDK stack deploys:
 2. Upload an architecture diagram image (PNG/JPG format)
 3. The application will analyze the diagram and provide insights
 4. Use the option tabs to generate modifications and improvements
+
+### 🆕 New Features
+
+#### Architecture Improvement Analysis
+When you upload an architecture image, DevGenius now provides comprehensive improvement analysis including:
+
+- **Security Enhancements**: Recommendations for better security configurations
+- **Performance Optimizations**: Suggestions for improved performance and scalability
+- **Cost Optimization**: Strategies to reduce operational costs
+- **Availability & Resilience**: High availability and disaster recovery improvements
+- **Operations & Monitoring**: Enhanced observability and automation recommendations
+- **Prioritized Implementation Plan**: Organized by High, Medium, and Low priority improvements
+
+#### Project Backlog & Estimations
+Generate complete project management artifacts including:
+
+- **Structured Backlog Table**: With columns for Iniciativa, Componente, Épica, User Story, Story Points, Hours, Priority, and Definition
+- **Story Point Estimations**: Using Fibonacci scale (1, 2, 3, 5, 8, 13, 21)
+- **Time Estimations**: Converted from story points to hours
+- **Project Phases**: Organized implementation roadmap
+- **Team Recommendations**: Suggested team size and skills
+- **Risk Assessment**: Identified dependencies and mitigation strategies
+
+Both features are available in the "Modify your existing architecture" tab when you upload an architecture image.
 
 ## Key Components
 
