@@ -1,7 +1,7 @@
 import { Construct } from 'constructs';
 import * as cdk from 'aws-cdk-lib';
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
-export declare class DevGeniusStack extends cdk.Stack {
+export declare class VitruvioStack extends cdk.Stack {
     readonly Distribution: cloudfront.Distribution;
     private readonly BEDROCK_KNOWLEDGE_BASE_SOURCES;
     private readonly BEDROCK_KB_INDEX_NAME;

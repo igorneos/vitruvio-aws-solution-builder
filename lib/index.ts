@@ -22,7 +22,7 @@ import * as cognito from "aws-cdk-lib/aws-cognito";
 import * as cognitoIdentityPool from "aws-cdk-lib/aws-cognito-identitypool";
 import * as opensearchserverless from "aws-cdk-lib/aws-opensearchserverless";
 
-export class DevGeniusStack extends cdk.Stack {
+export class VitruvioStack extends cdk.Stack {
 
     public readonly Distribution: cloudfront.Distribution
 
@@ -35,7 +35,7 @@ export class DevGeniusStack extends cdk.Stack {
         "https://aws.amazon.com/about-aws/whats-new/2024/",
         "https://aws.amazon.com/blogs/architecture/category/analytics/",
     ]
-    private readonly BEDROCK_KB_INDEX_NAME = "devgenius"
+    private readonly BEDROCK_KB_INDEX_NAME = "vitruvio"
     private readonly BEDROCK_AGENT_FOUNDATION_MODEL = "us.anthropic.claude-3-5-sonnet-20241022-v2:0"
     private readonly BEDROCK_AGENT_INSTRUCTION = `
         You are an AWS Data Analytics and DevOps Expert who will provide thorough,detailed, complete, ready to deploy end to end implementation AWS solutions.
@@ -410,7 +410,7 @@ export class DevGeniusStack extends cdk.Stack {
         const bedrockKnowledgeBase = new bedrock.CfnKnowledgeBase(this, "KnowledgeBase", {
             name: `${cdk.Stack.of(this).stackName}-kb`,
             roleArn: bedrockIamRole.roleArn,
-            description: "Knowledge base for DevGenius to transform project ideas into complete, ready-to-deploy solutions",
+            description: "Knowledge base for Vitruvio to transform project ideas into complete, ready-to-deploy solutions",
             knowledgeBaseConfiguration: {
                 type: "VECTOR",
                 vectorKnowledgeBaseConfiguration: {
@@ -496,7 +496,7 @@ export class DevGeniusStack extends cdk.Stack {
             agentResourceRoleArn: bedrockIamRole.roleArn,
             foundationModel: this.BEDROCK_AGENT_FOUNDATION_MODEL,
             instruction: this.BEDROCK_AGENT_INSTRUCTION,
-            description: "Bedrock agent configuration for DevGenius to transform project ideas into complete, ready-to-deploy solutions",
+            description: "Bedrock agent configuration for Vitruvio to transform project ideas into complete, ready-to-deploy solutions",
             idleSessionTtlInSeconds: 900,
             knowledgeBases: [{
                 knowledgeBaseId: bedrockKnowledgeBase.attrKnowledgeBaseId,
@@ -911,8 +911,8 @@ export class DevGeniusStack extends cdk.Stack {
     }
 
     private addTags() {
-        cdk.Tags.of(this).add("project", "DevGenius")
-        cdk.Tags.of(this).add("repo", "https://github.com/aws-samples/sample-devgenius-aws-solution-builder")
+        cdk.Tags.of(this).add("project", "Vitruvio")
+        cdk.Tags.of(this).add("repo", "https://github.com/aws-samples/sample-vitruvio-aws-solution-builder")
     }
 
     private addOutputs() {
@@ -925,7 +925,7 @@ export class DevGeniusStack extends cdk.Stack {
 const app = new cdk.App()
 const stackName = app.node.tryGetContext('stackName')
 cdk.Aspects.of(app).add(new cdk_nag.AwsSolutionsChecks({ verbose: true }))
-new DevGeniusStack(app, "dev-genius-stack", { stackName: stackName, env: { region: "us-west-2" } })
+new VitruvioStack(app, "dev-genius-stack", { stackName: stackName, env: { region: "us-west-2" } })
 
 // Adding cdk-nag suppression for edge stack
 const cdkEdgeStack = app.node.findChild('edge-lambda-stack-c82f584095ed9c5384efe32d61c2ab455d00750cc5') as cdk.Stack;

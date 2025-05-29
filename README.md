@@ -1,12 +1,12 @@
-# DevGenius - AWS Solution Generator
+# Vitruvio - AWS Solution Generator
 
-DevGenius is an AI-powered application that transforms project ideas into complete, ready-to-deploy AWS solutions. It leverages Amazon Bedrock and Claude AI models to provide architecture diagrams, cost estimates, infrastructure as code, and comprehensive technical documentation.
+Vitruvio is an AI-powered application that transforms project ideas into complete, ready-to-deploy AWS solutions. It leverages Amazon Bedrock and Claude AI models to provide architecture diagrams, cost estimates, infrastructure as code, and comprehensive technical documentation.
 
-![Watch the demo video](demo/DevGenius_Demo.gif)
+![Watch the demo video](demo/Vitruvio_Demo.gif)
 
-**Conversational Solution Architecture Building:** DevGenius enables customers to design solution architectures in a conversational manner. Users can create architecture diagrams (in draw.io format) and refine them interactively. Once the design is finalized, they can generate end-to-end code automation using CDK or CloudFormation templates, and deploy it in their AWS account with a single click. Additionally, customers can receive cost estimates for running the architecture in production, along with detailed documentation for the solution.
+**Conversational Solution Architecture Building:** Vitruvio enables customers to design solution architectures in a conversational manner. Users can create architecture diagrams (in draw.io format) and refine them interactively. Once the design is finalized, they can generate end-to-end code automation using CDK or CloudFormation templates, and deploy it in their AWS account with a single click. Additionally, customers can receive cost estimates for running the architecture in production, along with detailed documentation for the solution.
 
-**Build Solution Architecture from Whiteboard Drawings:** For customers who already have their architecture in image form (e.g., whiteboard drawings), DevGenius allows them to upload the image. Once uploaded, DevGenius analyzes the architecture and provides a detailed explanation. Customer can then refine the design conversationally and, once finalized, generate end-to-end code automation using CDK or CloudFormation. Cost estimates and comprehensive documentation are also available.
+**Build Solution Architecture from Whiteboard Drawings:** For customers who already have their architecture in image form (e.g., whiteboard drawings), Vitruvio allows them to upload the image. Once uploaded, Vitruvio analyzes the architecture and provides a detailed explanation. Customer can then refine the design conversationally and, once finalized, generate end-to-end code automation using CDK or CloudFormation. Cost estimates and comprehensive documentation are also available.
 
 ## Features
 
@@ -19,7 +19,7 @@ DevGenius is an AI-powered application that transforms project ideas into comple
 
 ## Architecture Overview
 
-DevGenius is built using a modern cloud-native architecture:
+Vitruvio is built using a modern cloud-native architecture:
 
 - **Frontend**: Streamlit-based UI for intuitive interaction
 - **AI Engine**: Amazon Bedrock with Claude AI models for solution generation
@@ -49,8 +49,8 @@ DevGenius is built using a modern cloud-native architecture:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/aws-samples/sample-devgenius-aws-solution-builder.git devgenius
-   cd devgenius
+   git clone https://github.com/aws-samples/sample-vitruvio-aws-solution-builder.git vitruvio
+   cd vitruvio
    ```
 
 2. Install the required dependencies:
@@ -83,7 +83,7 @@ Build and run using Docker after replacing all the values that follow the patter
 
 ```bash
 cd chatbot
-docker build -t devgenius .
+docker build -t vitruvio .
 docker run -p 8501:8501 \
   -e AWS_REGION="us-west-2" \
   -e BEDROCK_AGENT_ID="<REPLACE_ME_BEDROCK_AGENT_ID>" \
@@ -92,12 +92,12 @@ docker run -p 8501:8501 \
   -e CONVERSATION_TABLE_NAME="<REPLACE_ME_CONVERSATION_TABLE_NAME>" \
   -e FEEDBACK_TABLE_NAME="<REPLACE_ME_FEEDBACK_TABLE_NAME>" \
   -e SESSION_TABLE_NAME="<REPLACE_ME_SESSION_TABLE_NAME>" \
-  devgenius
+  vitruvio
 ```
 
 ## AWS Infrastructure Deployment
 
-DevGenius includes a CDK stack that deploys all required infrastructure:
+Vitruvio includes a CDK stack that deploys all required infrastructure:
 
 1. Install the CDK toolkit:
 
@@ -120,13 +120,13 @@ DevGenius includes a CDK stack that deploys all required infrastructure:
 4. Deploy the stack:
 
    ```bash
-   cdk deploy --all --context stackName=devgenius
+   cdk deploy --all --context stackName=vitruvio
    ```
 
 5. To destroy the infrastructure when no longer needed:
 
    ```bash
-   cdk destroy --all --context stackName=devgenius
+   cdk destroy --all --context stackName=vitruvio
    ```
 
    This command will remove all AWS resources created by the stack. You'll be prompted to confirm before the deletion proceeds. Note that this action is irreversible and will delete all application data stored in the deployed resources.
@@ -175,7 +175,7 @@ The CDK stack deploys:
 
 ### Bedrock Agent and Knowledge Base
 
-DevGenius uses Amazon Bedrock Agents with a custom Knowledge Base containing AWS documentation, whitepapers, and blogs. The agent is configured with specialized prompts to generate AWS solutions following best practices.
+Vitruvio uses Amazon Bedrock Agents with a custom Knowledge Base containing AWS documentation, whitepapers, and blogs. The agent is configured with specialized prompts to generate AWS solutions following best practices.
 
 Knowledge base sources include:
 
@@ -216,7 +216,7 @@ The application can generate both AWS CDK (TypeScript) and CloudFormation (YAML)
 
 ## Security
 
-DevGenius includes several security features:
+Vitruvio includes several security features:
 
 - Cognito authentication for user management
 - CloudFront with Lambda@Edge for request validation
