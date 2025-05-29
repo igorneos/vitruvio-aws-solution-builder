@@ -9,7 +9,7 @@ from botocore.config import Config
 from langchain.document_loaders import UnstructuredPowerPointLoader
 
 # NORTHSTAR_S3_BUCKET_NAME = os.environ.get('NORTHSTAR_S3_BUCKET_NAME')
-NORTHSTAR_S3_BUCKET_NAME = "devgenius-reinvent-release-037225164867-us-west-2"
+NORTHSTAR_S3_BUCKET_NAME = "vitruvio-reinvent-release-037225164867-us-west-2"
 AWS_REGION = os.getenv("AWS_REGION")
 config = Config(read_timeout=1000, retries=(dict(max_attempts=5)))
 
