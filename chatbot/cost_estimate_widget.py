@@ -86,7 +86,7 @@ def generate_cost_estimates(cost_messages):
     1. These estimates assume moderate usage and may vary based on actual workload.
     2. Data transfer costs between services within the same region are not included, as they are typically free.
     3. Costs for AWS CDK, CloudFormation, and IAM are not included as they are generally free services.
-    4. The Bedrock Agent and Claude Model costs are not included as pricing information for these services was not available at the time of this estimation.
+    4. The Bedrock Agent and Amazon Nova Model costs are not included as pricing information for these services was not available at the time of this estimation.
     5. Actual costs may be lower with reserved instances, savings plans, or other discounts available to your AWS account.
             </example>
             """  # noqa

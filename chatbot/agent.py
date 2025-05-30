@@ -9,7 +9,7 @@ from utils import enable_artifacts_download
 from utils import retrieve_environment_variables
 from utils import save_conversation
 from utils import invoke_bedrock_model_streaming
-from layout import create_tabs, create_option_tabs, welcome_sidebar, login_page
+from layout import create_tabs, create_option_tabs, create_architecture_analysis_tabs, welcome_sidebar, login_page
 from styles import apply_styles
 from cost_estimate_widget import generate_cost_estimates
 from generate_arch_widget import generate_arch
@@ -17,6 +17,8 @@ from generate_cdk_widget import generate_cdk
 from generate_cfn_widget import generate_cfn
 from generate_terraform_widget import generate_terraform
 from generate_doc_widget import generate_doc
+from architecture_analysis_widget import analyze_architecture_improvements
+from backlog_estimation_widget import generate_backlog_estimation, generate_backlog_from_architecture
 import io
 
 # Streamlit configuration 
@@ -33,7 +35,7 @@ dynamodb_resource = boto3.resource('dynamodb', region_name=AWS_REGION)
 
 ACCOUNT_ID = sts_client.get_caller_identity()["Account"]
 # Constants
-BEDROCK_MODEL_ID = f"arn:aws:bedrock:{AWS_REGION}:{ACCOUNT_ID}:inference-profile/us.anthropic.claude-3-5-sonnet-20241022-v2:0"  # noqa
+BEDROCK_MODEL_ID = "amazon.nova-pro-v1:0"  # Amazon Nova Pro multimodal model
 CONVERSATION_TABLE_NAME = retrieve_environment_variables("CONVERSATION_TABLE_NAME")
 FEEDBACK_TABLE_NAME = retrieve_environment_variables("FEEDBACK_TABLE_NAME")
 SESSION_TABLE_NAME = retrieve_environment_variables("SESSION_TABLE_NAME")
@@ -251,7 +253,11 @@ else:
                 with devgenius_option_tabs[3]:
                     generate_cfn(st.session_state.messages)
                 with devgenius_option_tabs[4]:
+                    generate_terraform(st.session_state.messages)
+                with devgenius_option_tabs[5]:
                     generate_doc(st.session_state.messages)
+                with devgenius_option_tabs[6]:
+                    generate_backlog_estimation(st.session_state.messages)
                 enable_artifacts_download()
 
             save_conversation(st.session_state['conversation_id'], prompt, agent_answer)
@@ -337,32 +343,50 @@ else:
 
         # Trigger actions for generating solution
         if uploaded_file:
-            devgenius_option_tabs = create_option_tabs()
-            with devgenius_option_tabs[0]:
+            # Initialize state variables for new features
+            if 'generate_analysis_called' not in st.session_state:
+                st.session_state.generate_analysis_called = False
+            if 'generate_backlog_called' not in st.session_state:
+                st.session_state.generate_backlog_called = False
+                
+            devgenius_option_tabs = create_architecture_analysis_tabs()
+            
+            with devgenius_option_tabs[0]:  # Architecture Analysis
+                if not st.session_state.generate_analysis_called:
+                    analyze_architecture_improvements(uploaded_file)
+                    st.session_state.generate_analysis_called = True
+                    
+            with devgenius_option_tabs[1]:  # Project Backlog
+                if not st.session_state.generate_backlog_called:
+                    generate_backlog_from_architecture(uploaded_file)
+                    st.session_state.generate_backlog_called = True
+                    
+            with devgenius_option_tabs[2]:  # Cost Estimates
                 if not st.session_state.generate_cost_estimates_called:
                     generate_cost_estimates(st.session_state.mod_messages)
                     st.session_state.generate_cost_estimates_called = True
-            with devgenius_option_tabs[1]:
+                    
+            with devgenius_option_tabs[3]:  # Architecture diagram
                 if not st.session_state.generate_arch_called:
                     generate_arch(st.session_state.mod_messages)
                     st.session_state.generate_arch_called = True
 
-            with devgenius_option_tabs[2]:
+            with devgenius_option_tabs[4]:  # CDK code
                 if not st.session_state.generate_cdk_called:
                     generate_cdk(st.session_state.mod_messages)
                     st.session_state.generate_cdk_called = True
 
-            with devgenius_option_tabs[3]:
+            with devgenius_option_tabs[5]:  # CloudFormation code
                 if not st.session_state.generate_cfn_called:
                     generate_cfn(st.session_state.mod_messages)
                     st.session_state.generate_cfn_called = True
 
-            with devgenius_option_tabs[4]:
+            with devgenius_option_tabs[6]:  # Terraform code
                 if not st.session_state.generate_terraform_called:
                     generate_terraform(st.session_state.mod_messages)
                     st.session_state.generate_terraform_called = True
 
-            with devgenius_option_tabs[5]:
+            with devgenius_option_tabs[7]:  # Technical documentation
                 if not st.session_state.generate_doc_called:
                     generate_doc(st.session_state.mod_messages)
                     st.session_state.generate_doc_called = True

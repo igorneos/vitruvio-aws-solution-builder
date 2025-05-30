@@ -23,7 +23,7 @@ BEDROCK_TEMPERATURE = 0
 sts_client = boto3.client('sts', region_name=AWS_REGION)
 ACCOUNT_ID = sts_client.get_caller_identity()["Account"]
 # Cross Region Inference for improved resilience https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html  # noqa
-BEDROCK_MODEL_ID = f"arn:aws:bedrock:{AWS_REGION}:{ACCOUNT_ID}:inference-profile/us.anthropic.claude-3-7-sonnet-20250219-v1:0"  # noqa
+BEDROCK_MODEL_ID = "amazon.nova-pro-v1:0"  # Amazon Nova Pro multimodal model
 
 dynamodb_resource = boto3.resource('dynamodb', region_name=AWS_REGION)
 bedrock_agent_runtime_client = boto3.client('bedrock-agent-runtime', region_name=AWS_REGION)
@@ -50,19 +50,15 @@ def invoke_bedrock_agent(
 
 @st.fragment
 def invoke_bedrock_model_streaming(messages, enable_reasoning=False, reasoning_budget=4096):
+    # Amazon Nova models use a different request format
     body = {
-        "anthropic_version": "bedrock-2023-05-31",
-        "max_tokens": BEDROCK_MAX_TOKENS,
         "messages": messages,
+        "max_tokens": BEDROCK_MAX_TOKENS,
         "temperature": BEDROCK_TEMPERATURE,
     }
 
-    if enable_reasoning:
-        body["thinking"] = {
-            "type": "enabled",
-            "budget_tokens": reasoning_budget
-        }
-        body["temperature"] = 1   # temperature may only be set to 1 when thinking is enabled.
+    # Note: Amazon Nova models don't support the thinking/reasoning feature like Claude
+    # The enable_reasoning parameter is kept for compatibility but not used
 
     retry_count = 0
     max_retries = 3
