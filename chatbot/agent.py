@@ -20,7 +20,7 @@ from generate_doc_widget import generate_doc
 import io
 
 # Streamlit configuration 
-st.set_page_config(page_title="DevGenius", layout='wide')
+st.set_page_config(page_title="Vitruvio", layout='wide')
 apply_styles()
 
 # Initialize AWS clients
@@ -117,7 +117,7 @@ def reset_messages():
     # st.session_state['conversation_id'] = str(uuid.uuid4())
 
     initial_question = get_initial_question(st.session_state.topic_selector)
-    st.session_state.messages = [{"role": "assistant", "content": "Welcome to DevGenius — turning ideas into reality. Together, we’ll design your architecture and solution, with each conversation shaping your vision. Let’s get started on building!"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Welcome to Vitruvio — turning ideas into reality. Together, we’ll design your architecture and solution, with each conversation shaping your vision. Let’s get started on building!"}]
 
     if initial_question:
         st.session_state.messages.append({"role": "user", "content": initial_question})
@@ -179,7 +179,7 @@ else:
     if 'active_tab' not in st.session_state:
         st.session_state.active_tab = "Build a solution"
     with st.sidebar:
-        # st.title("DevGenius")
+        # st.title("Vitruvio")
         welcome_sidebar()
 
     # Tab for "Generate Architecture Diagram and Solution"
@@ -241,16 +241,16 @@ else:
             if not ask_user:
                 st.session_state.interaction.append(
                     {"type": "Details", "details": st.session_state.messages[-1]['content']})
-                devgenius_option_tabs = create_option_tabs()
-                with devgenius_option_tabs[0]:
+                vitruvio_option_tabs = create_option_tabs()
+                with vitruvio_option_tabs[0]:
                     generate_cost_estimates(st.session_state.messages)
-                with devgenius_option_tabs[1]:
+                with vitruvio_option_tabs[1]:
                     generate_arch(st.session_state.messages)
-                with devgenius_option_tabs[2]:
+                with vitruvio_option_tabs[2]:
                     generate_cdk(st.session_state.messages)
-                with devgenius_option_tabs[3]:
+                with vitruvio_option_tabs[3]:
                     generate_cfn(st.session_state.messages)
-                with devgenius_option_tabs[4]:
+                with vitruvio_option_tabs[4]:
                     generate_doc(st.session_state.messages)
                 enable_artifacts_download()
 
@@ -337,32 +337,32 @@ else:
 
         # Trigger actions for generating solution
         if uploaded_file:
-            devgenius_option_tabs = create_option_tabs()
-            with devgenius_option_tabs[0]:
+            vitruvio_option_tabs = create_option_tabs()
+            with vitruvio_option_tabs[0]:
                 if not st.session_state.generate_cost_estimates_called:
                     generate_cost_estimates(st.session_state.mod_messages)
                     st.session_state.generate_cost_estimates_called = True
-            with devgenius_option_tabs[1]:
+            with vitruvio_option_tabs[1]:
                 if not st.session_state.generate_arch_called:
                     generate_arch(st.session_state.mod_messages)
                     st.session_state.generate_arch_called = True
 
-            with devgenius_option_tabs[2]:
+            with vitruvio_option_tabs[2]:
                 if not st.session_state.generate_cdk_called:
                     generate_cdk(st.session_state.mod_messages)
                     st.session_state.generate_cdk_called = True
 
-            with devgenius_option_tabs[3]:
+            with vitruvio_option_tabs[3]:
                 if not st.session_state.generate_cfn_called:
                     generate_cfn(st.session_state.mod_messages)
                     st.session_state.generate_cfn_called = True
 
-            with devgenius_option_tabs[4]:
+            with vitruvio_option_tabs[4]:
                 if not st.session_state.generate_terraform_called:
                     generate_terraform(st.session_state.mod_messages)
                     st.session_state.generate_terraform_called = True
 
-            with devgenius_option_tabs[5]:
+            with vitruvio_option_tabs[5]:
                 if not st.session_state.generate_doc_called:
                     generate_doc(st.session_state.mod_messages)
                     st.session_state.generate_doc_called = True
